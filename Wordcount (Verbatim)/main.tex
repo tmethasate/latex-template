@@ -1,0 +1,22 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+% the following \usepackage statement
+% is only to make the page smaller for the screenshot,
+% it can be removed for the actual document
+\usepackage[totalheight=8cm]{geometry}
+
+\usepackage{verbatim}
+
+% note the addition of -optionfile=texcount.cfg in the command below
+\newcommand{\wordcount}[1]{%
+	\immediate\write18{texcount -incbib -nobib -sum #1 | grep 'Sum count:' | awk '{print $3}' > #1-words.sum}%
+	\raggedleft\textit{\textbf{Total Words} (Excluding Footnotes and In-text Citations Counted as One): \textbf{\input{#1-words.sum}}}%
+}
+
+\begin{document}
+	
+	\input{tcfootnotes}
+	
+	\wordcount{tcfootnotes.tex}
+	
+\end{document}
